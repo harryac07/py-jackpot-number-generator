@@ -1,0 +1,36 @@
+service: jackpot-number-detector
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - ses:SendEmail
+      Resource: '*'
+
+package:
+  individually: true
+  exclude:
+    - ./** 
+custom:
+  environment:
+    ACCOUND_ID: ${file(./env.yml):${self:provider.stage}.ACCOUND_ID}
+    SENDER_EMAIL: ${file(./env.yml):${self:provider.stage}.SENDER_EMAIL}
+
+functions:
+  generateNumberTest:
+    handler: index.handler
+    timeout: 30 # 30 sec
+    memorySize: 128
+    package:
+      include: 
+        - index.py  
+        - utils/**
+    environment:
+      ACCOUND_ID: ${self:custom.environment.ACCOUND_ID}
+      SENDER_EMAIL: ${self:custom.environment.SENDER_EMAIL}
+
+plugins:
+  - serverless-python-requirements
