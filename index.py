@@ -23,7 +23,7 @@ def handler(event, context):
     else:
         number_obj = JackpotGenerator(1, 42, 1, 10)
         number_obj.generate_numbers(5, 0)
-    
+
     message_body = """
     <h3>Hello there!</h3>
     <p>Here are the numbers you can use to win Jackpot of your choice!</p>    
