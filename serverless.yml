@@ -24,6 +24,8 @@ functions:
     handler: index.handler
     timeout: 30 # 30 sec
     memorySize: 128
+    events:
+      - schedule: cron(0 18 * * ? *)
     package:
       include: 
         - index.py  
