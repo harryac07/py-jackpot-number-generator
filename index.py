@@ -9,7 +9,7 @@ client = boto3.client('sesv2')
 
 
 def handler(event, context):
-    receiver = os.environ.get('SENDER_EMAIL')
+    receiver = os.environ.get('RECEIVER_EMAIL')
     sender = os.environ.get('SENDER_EMAIL')
     # Supply jackpot specific min and max numbers
     # First 2 params => Main numbers, Last 2 numbers => Bonus numbers
